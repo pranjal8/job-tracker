@@ -3,10 +3,11 @@
   gap: 12px;
   align-items: flex-start;
   padding: 16px;
+  overflow-x: auto;
 }
 
 .column {
-  flex: 1;
+  flex: 1 0 220px;
   min-width: 0;
   background: #f4f4f5;
   border-radius: 8px;
@@ -25,17 +26,28 @@
   border-radius: 4px;
   padding: 8px;
   margin-bottom: 8px;
+  touch-action: none;
+  position: relative;
+}
+.card:focus-visible {
+  overflow: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+.column-over {
+  outline: 2px solid goldenrod;
 }
 .card-company {
   font-weight: 600;
   font-size: 15px;
   margin: 8px 0 0;
+  overflow-wrap: anywhere;
 }
 .card-role {
   margin: 0;
   color: #71717a;
   font-size: 13px;
   margin-top: 2px;
+  overflow-wrap: anywhere;
 }
 .card a {
   font-size: 13px;
@@ -46,6 +58,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.card-select button {
+  color: #b91c1c;
 }
 .form {
   display: flex;
