@@ -1,8 +1,15 @@
 import { useDraggable } from "@dnd-kit/core";
-import { STATUSES } from "../constants";
+import { type Status, STATUSES } from "../constants";
 import { CSS } from "@dnd-kit/utilities";
+import type { Application, DeleteHandler, StatusChangeHandler } from "../types";
 
-function ApplicationCard({ application, onStatusChange, onDelete }) {
+interface Props {
+  application: Application;
+  onStatusChange: StatusChangeHandler;
+  onDelete: DeleteHandler;
+}
+
+function ApplicationCard({ application, onStatusChange, onDelete }: Props) {
   const { setNodeRef, listeners, attributes, transform } = useDraggable({ id: application.id });
   const style = transform
     ? { transform: CSS.Translate.toString(transform), zIndex: 10 }
@@ -13,7 +20,7 @@ function ApplicationCard({ application, onStatusChange, onDelete }) {
       <div className="card-select">
         <select
           value={application.status}
-          onChange={(e) => onStatusChange(application.id, e.target.value)}
+          onChange={(e) => onStatusChange(application.id, e.target.value as Status)}
         >
           {STATUSES.map((item) => (
             <option value={item} key={item}>
