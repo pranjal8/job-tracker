@@ -1,15 +1,13 @@
-import { Application, DeleteHandler, StatusChangeHandler } from "../types";
 import { STATUSES, isStatus } from "../constants";
 import Column from "./Column";
 import { DndContext, PointerSensor, useSensors, useSensor } from "@dnd-kit/core";
 import type { DragEndEvent } from "@dnd-kit/core";
+import { useApplications, useApplicationsDispatch } from "../state/ApplicationContext";
 
-interface Props {
-  applications: Application[];
-  onStatusChange: StatusChangeHandler;
-  onDelete: DeleteHandler;
-}
-export default function Board({ applications, onStatusChange, onDelete }: Props) {
+export default function Board() {
+  const dispatch = useApplicationsDispatch();
+  const applications = useApplications();
+
   function handleDragEnd({ active, over }: DragEndEvent) {
     if (!over || !isStatus(over.id)) {
       return;
@@ -17,7 +15,7 @@ export default function Board({ applications, onStatusChange, onDelete }: Props)
     const app = applications.find((a) => a.id === active.id);
     if (!app || app.status === over.id) return;
 
-    onStatusChange(app.id, over.id);
+    dispatch({ type: "move", id: app.id, status: over.id });
   }
 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
@@ -27,15 +25,7 @@ export default function Board({ applications, onStatusChange, onDelete }: Props)
       <div className="board">
         {STATUSES.map((status) => {
           const columnApps = applications.filter((a) => a.status === status);
-          return (
-            <Column
-              key={status}
-              status={status}
-              applications={columnApps}
-              onStatusChange={onStatusChange}
-              onDelete={onDelete}
-            />
-          );
+          return <Column key={status} status={status} applications={columnApps} />;
         })}
       </div>
     </DndContext>

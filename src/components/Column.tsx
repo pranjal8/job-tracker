@@ -1,15 +1,13 @@
 import { useDroppable } from "@dnd-kit/core";
 import ApplicationCard from "./ApplicationCard";
 import type { Status } from "../constants";
-import type { Application, DeleteHandler, StatusChangeHandler } from "../types";
+import type { Application } from "../types";
 
 interface Props {
   status: Status;
   applications: Application[];
-  onStatusChange: StatusChangeHandler;
-  onDelete: DeleteHandler;
 }
-const Column = ({ status, applications, onStatusChange, onDelete }: Props) => {
+const Column = ({ status, applications }: Props) => {
   const { setNodeRef, isOver } = useDroppable({ id: status });
 
   return (
@@ -18,12 +16,7 @@ const Column = ({ status, applications, onStatusChange, onDelete }: Props) => {
         {status} ({applications.length})
       </h3>
       {applications.map((app) => (
-        <ApplicationCard
-          key={app.id}
-          application={app}
-          onStatusChange={onStatusChange}
-          onDelete={onDelete}
-        />
+        <ApplicationCard key={app.id} application={app} />
       ))}
     </div>
   );

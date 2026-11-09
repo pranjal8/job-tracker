@@ -1,16 +1,18 @@
 import { useDraggable } from "@dnd-kit/core";
 import { type Status, STATUSES } from "../constants";
 import { CSS } from "@dnd-kit/utilities";
-import type { Application, DeleteHandler, StatusChangeHandler } from "../types";
+import type { Application } from "../types";
+import { useApplicationsDispatch } from "../state/ApplicationContext";
 
 interface Props {
   application: Application;
-  onStatusChange: StatusChangeHandler;
-  onDelete: DeleteHandler;
 }
 
-function ApplicationCard({ application, onStatusChange, onDelete }: Props) {
+function ApplicationCard({ application }: Props) {
+  const dispatch = useApplicationsDispatch();
+
   const { setNodeRef, listeners, attributes, transform } = useDraggable({ id: application.id });
+
   const style = transform
     ? { transform: CSS.Translate.toString(transform), zIndex: 10 }
     : undefined;
@@ -20,7 +22,9 @@ function ApplicationCard({ application, onStatusChange, onDelete }: Props) {
       <div className="card-select">
         <select
           value={application.status}
-          onChange={(e) => onStatusChange(application.id, e.target.value as Status)}
+          onChange={(e) =>
+            dispatch({ type: "move", id: application.id, status: e.target.value as Status })
+          }
         >
           {STATUSES.map((item) => (
             <option value={item} key={item}>
@@ -29,7 +33,7 @@ function ApplicationCard({ application, onStatusChange, onDelete }: Props) {
           ))}
         </select>
 
-        <button onClick={() => onDelete(application.id)}>Delete</button>
+        <button onClick={() => dispatch({ type: "delete", id: application.id })}>Delete</button>
       </div>
       <p className="card-company"> {application.company} </p>
       <p className="card-role"> {application.role} </p>
