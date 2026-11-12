@@ -4,7 +4,8 @@ import type { Status } from "../constants";
 export type Action =
   | { type: "add"; application: Application }
   | { type: "move"; id: Application["id"]; status: Status }
-  | { type: "delete"; id: Application["id"] };
+  | { type: "delete"; id: Application["id"] }
+  | { type: "update"; id: Application["id"]; changes: Partial<Omit<Application, "id">> };
 
 export function applicationReducer(state: Application[], action: Action): Application[] {
   switch (action.type) {
@@ -16,6 +17,9 @@ export function applicationReducer(state: Application[], action: Action): Applic
 
     case "delete":
       return state.filter((a) => a.id !== action.id);
+
+    case "update":
+      return state.map((a) => (a.id === action.id ? { ...a, ...action.changes } : a));
 
     default: {
       return assertNever(action);

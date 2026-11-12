@@ -21,7 +21,12 @@ const AddApplicationForm = () => {
 
     dispatch({
       type: "add",
-      application: { id: crypto.randomUUID(), status: "wishlist", ...data },
+      application: {
+        id: crypto.randomUUID(),
+        status: "wishlist",
+        createdAt: new Date().toISOString(),
+        ...data,
+      },
     });
 
     setCompany("");

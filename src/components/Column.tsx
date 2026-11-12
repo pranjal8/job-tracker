@@ -6,8 +6,9 @@ import type { Application } from "../types";
 interface Props {
   status: Status;
   applications: Application[];
+  onEdit: (id: Application["id"]) => void;
 }
-const Column = ({ status, applications }: Props) => {
+const Column = ({ status, applications, onEdit }: Props) => {
   const { setNodeRef, isOver } = useDroppable({ id: status });
 
   return (
@@ -16,7 +17,7 @@ const Column = ({ status, applications }: Props) => {
         {status} ({applications.length})
       </h3>
       {applications.map((app) => (
-        <ApplicationCard key={app.id} application={app} />
+        <ApplicationCard key={app.id} application={app} onEdit={onEdit} />
       ))}
     </div>
   );

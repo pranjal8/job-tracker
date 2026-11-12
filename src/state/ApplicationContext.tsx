@@ -1,4 +1,11 @@
-import { ReactNode, useReducer, useEffect, createContext, type Dispatch, useContext } from "react";
+import {
+  type ReactNode,
+  useReducer,
+  useEffect,
+  createContext,
+  type Dispatch,
+  useContext,
+} from "react";
 import { type Action, applicationReducer } from "./applicationReducer";
 import { loadApplications } from "./storage";
 import type { Application } from "../types";

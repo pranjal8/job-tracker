@@ -73,3 +73,27 @@
   padding: 8px;
   flex: 1;
 }
+
+dialog {
+  border: 0.5px solid #d4d4d8;
+  border-radius: 12px;
+  padding: 16px;
+  width: min(420px, 90vw);
+}
+dialog::backdrop {
+  background: rgb(0 0 0 / 0.4);
+}
+dialog form {
+  display: grid;
+  gap: 10px;
+}
+dialog label {
+  display: grid;
+  gap: 4px;
+  font-size: 13px;
+}
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

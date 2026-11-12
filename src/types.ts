@@ -7,6 +7,8 @@ export interface Application {
   status: Status;
   link: string;
   notes?: string;
+  createdAt?: string;
+  interviewDate?: string;
 }
 
 export type StatusChangeHandler = (id: Application["id"], status: Status) => void;

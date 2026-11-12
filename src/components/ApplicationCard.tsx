@@ -6,9 +6,10 @@ import { useApplicationsDispatch } from "../state/ApplicationContext";
 
 interface Props {
   application: Application;
+  onEdit: (id: Application["id"]) => void;
 }
 
-function ApplicationCard({ application }: Props) {
+function ApplicationCard({ application, onEdit }: Props) {
   const dispatch = useApplicationsDispatch();
 
   const { setNodeRef, listeners, attributes, transform } = useDraggable({ id: application.id });
@@ -34,6 +35,7 @@ function ApplicationCard({ application }: Props) {
         </select>
 
         <button onClick={() => dispatch({ type: "delete", id: application.id })}>Delete</button>
+        <button onClick={() => onEdit(application.id)}>Edit</button>
       </div>
       <p className="card-company"> {application.company} </p>
       <p className="card-role"> {application.role} </p>
