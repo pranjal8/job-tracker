@@ -19,6 +19,7 @@ export default function EditApplicationDialog({ application, onClose }: Props) {
 
   return (
     <dialog ref={ref} onClose={onClose}>
+      {/* key resets the form's state whenever a different application is edited */}
       {application && <EditForm key={application.id} application={application} onDone={onClose} />}
     </dialog>
   );
@@ -43,6 +44,7 @@ function EditForm({ application, onDone }: { application: Application; onDone: (
         company: company.trim(),
         role: role.trim(),
         link: link.trim(),
+        // empty values are stored as undefined, so clearing a field removes it
         notes: notes.trim() || undefined,
         interviewDate: interviewDate || undefined,
       },
@@ -56,16 +58,32 @@ function EditForm({ application, onDone }: { application: Application; onDone: (
         Company
         <input value={company} onChange={(e) => setCompany(e.target.value)} required />
       </label>
-      {/* your task: the same pattern for
-          - role (required)
-          - link (type="url")
-          - notes (a <textarea>, rows={3})
-          - interview date (<input type="date">) */}
+      <label>
+        Role
+        <input value={role} onChange={(e) => setRole(e.target.value)} required />
+      </label>
+      <label>
+        Link
+        <input value={link} onChange={(e) => setLink(e.target.value)} type="url" />
+      </label>
+      <label>
+        Notes
+        <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={3} />
+      </label>
+      <label>
+        Interview date
+        <input
+          value={interviewDate}
+          onChange={(e) => setInterviewDate(e.target.value)}
+          type="date"
+        />
+      </label>
+
       <div className="dialog-actions">
         <button type="button" onClick={onDone}>
           Cancel
         </button>
-        <button type="submit">Save</button>
+        <button type="submit">Save changes</button>
       </div>
     </form>
   );

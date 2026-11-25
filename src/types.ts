@@ -11,6 +11,4 @@ export interface Application {
   interviewDate?: string;
 }
 
-export type StatusChangeHandler = (id: Application["id"], status: Status) => void;
-export type DeleteHandler = (id: Application["id"]) => void;
 export type NewApplication = Pick<Application, "company" | "role" | "link">;

@@ -1,29 +1,36 @@
 import {
-  type ReactNode,
-  useReducer,
-  useEffect,
   createContext,
-  type Dispatch,
   useContext,
+  useEffect,
+  useReducer,
+  type Dispatch,
+  type ReactNode,
 } from "react";
-import { type Action, applicationReducer } from "./applicationReducer";
+import { applicationReducer, type Action } from "./applicationReducer";
 import { loadApplications } from "./storage";
 import type { Application } from "../types";
 
+// Two contexts on purpose: `dispatch` never changes, so components that only
+// dispatch (the form, the cards) do not re-render when the list changes.
 const ApplicationContext = createContext<Application[] | null>(null);
 const DispatchContext = createContext<Dispatch<Action> | null>(null);
 
 export function ApplicationsProvider({ children }: { children: ReactNode }) {
   const [applications, dispatch] = useReducer(applicationReducer, undefined, loadApplications);
 
+  console.log("3 Provider");
   useEffect(() => {
-    localStorage.setItem("applications", JSON.stringify(applications));
+    try {
+      localStorage.setItem("applications", JSON.stringify(applications));
+    } catch {
+      // Storage full or blocked: the app keeps working, it just will not persist.
+    }
   }, [applications]);
 
   return (
-    <ApplicationContext.Provider value={applications}>
-      <DispatchContext value={dispatch}> {children} </DispatchContext>
-    </ApplicationContext.Provider>
+    <ApplicationContext value={applications}>
+      <DispatchContext value={dispatch}>{children}</DispatchContext>
+    </ApplicationContext>
   );
 }
 

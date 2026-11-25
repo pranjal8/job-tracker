@@ -1,4 +1,4 @@
-import { type SubmitEvent, useState } from "react";
+import { useState, type SubmitEvent } from "react";
 import type { NewApplication } from "../types";
 import { useApplicationsDispatch } from "../state/ApplicationContext";
 
@@ -35,19 +35,28 @@ const AddApplicationForm = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} className="form">
-        <input placeholder="Company" value={company} onChange={(e) => setCompany(e.target.value)} />
-        <input placeholder="Role" value={role} onChange={(e) => setRole(e.target.value)} />
-        <input
-          placeholder="Job link"
-          type="url"
-          value={link}
-          onChange={(e) => setLink(e.target.value)}
-        />
-        <button type="submit"> Submit </button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit} className="form">
+      <input
+        aria-label="Company"
+        placeholder="Company"
+        value={company}
+        onChange={(e) => setCompany(e.target.value)}
+      />
+      <input
+        aria-label="Role"
+        placeholder="Role"
+        value={role}
+        onChange={(e) => setRole(e.target.value)}
+      />
+      <input
+        aria-label="Job link"
+        placeholder="Job link"
+        type="url"
+        value={link}
+        onChange={(e) => setLink(e.target.value)}
+      />
+      <button type="submit">Add application</button>
+    </form>
   );
 };
 

@@ -1,5 +1,6 @@
 import type { Application } from "../types";
 
+// Neutral demo data: this is what a first-time visitor sees.
 export const applicationList: Application[] = [
   {
     id: 1,
@@ -8,6 +9,7 @@ export const applicationList: Application[] = [
     status: "wishlist",
     link: "https://example.com/jobs/101",
     notes: "Saw it on a careers page",
+    createdAt: "2026-11-01T09:00:00.000Z",
   },
   {
     id: 2,
@@ -15,6 +17,7 @@ export const applicationList: Application[] = [
     role: "React Developer",
     status: "wishlist",
     link: "https://example.com/jobs/102",
+    createdAt: "2026-11-02T09:00:00.000Z",
   },
   {
     id: 3,
@@ -22,7 +25,8 @@ export const applicationList: Application[] = [
     role: "Frontend Engineer",
     status: "applied",
     link: "https://example.com/jobs/103",
-    notes: "Applied through referral",
+    notes: "Applied through a referral",
+    createdAt: "2026-11-03T09:00:00.000Z",
   },
   {
     id: 4,
@@ -30,6 +34,7 @@ export const applicationList: Application[] = [
     role: "UI Engineer",
     status: "applied",
     link: "https://example.com/jobs/104",
+    createdAt: "2026-11-04T09:00:00.000Z",
   },
   {
     id: 5,
@@ -38,6 +43,8 @@ export const applicationList: Application[] = [
     status: "interview",
     link: "https://example.com/jobs/105",
     notes: "Technical round on Friday",
+    interviewDate: "2026-11-20",
+    createdAt: "2026-11-05T09:00:00.000Z",
   },
   {
     id: 6,
@@ -45,6 +52,7 @@ export const applicationList: Application[] = [
     role: "React Engineer",
     status: "offer",
     link: "https://example.com/jobs/106",
+    createdAt: "2026-11-06T09:00:00.000Z",
   },
   {
     id: 7,
@@ -52,5 +60,6 @@ export const applicationList: Application[] = [
     role: "Frontend Developer",
     status: "rejected",
     link: "https://example.com/jobs/107",
+    createdAt: "2026-11-07T09:00:00.000Z",
   },
 ];

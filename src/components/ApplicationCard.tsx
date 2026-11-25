@@ -1,17 +1,19 @@
 import { useDraggable } from "@dnd-kit/core";
-import { type Status, STATUSES } from "../constants";
 import { CSS } from "@dnd-kit/utilities";
-import type { Application } from "../types";
+import { type Status, STATUSES } from "../constants";
 import { useApplicationsDispatch } from "../state/ApplicationContext";
+import type { Application } from "../types";
+import { formatDate } from "../utils/formatDate";
 
 interface Props {
   application: Application;
   onEdit: (id: Application["id"]) => void;
+  onDelete: (application: Application) => void;
 }
 
-function ApplicationCard({ application, onEdit }: Props) {
+function ApplicationCard({ application, onEdit, onDelete }: Props) {
+  console.log("8 ApplicationCard");
   const dispatch = useApplicationsDispatch();
-
   const { setNodeRef, listeners, attributes, transform } = useDraggable({ id: application.id });
 
   const style = transform
@@ -22,6 +24,7 @@ function ApplicationCard({ application, onEdit }: Props) {
     <div className="card" ref={setNodeRef} style={style} {...listeners} {...attributes}>
       <div className="card-select">
         <select
+          aria-label={`Status for ${application.company}`}
           value={application.status}
           onChange={(e) =>
             dispatch({ type: "move", id: application.id, status: e.target.value as Status })
@@ -34,11 +37,24 @@ function ApplicationCard({ application, onEdit }: Props) {
           ))}
         </select>
 
-        <button onClick={() => dispatch({ type: "delete", id: application.id })}>Delete</button>
-        <button onClick={() => onEdit(application.id)}>Edit</button>
+        <button
+          className="danger"
+          aria-label={`Delete ${application.company}`}
+          onClick={() => onDelete(application)}
+        >
+          Delete
+        </button>
+        <button aria-label={`Edit ${application.company}`} onClick={() => onEdit(application.id)}>
+          Edit
+        </button>
       </div>
-      <p className="card-company"> {application.company} </p>
-      <p className="card-role"> {application.role} </p>
+
+      <p className="card-company">{application.company}</p>
+      <p className="card-role">{application.role}</p>
+      {application.notes && <p className="card-notes">{application.notes}</p>}
+      {application.interviewDate && (
+        <p className="card-date">Interview: {formatDate(application.interviewDate)}</p>
+      )}
       <a href={application.link} target="_blank" rel="noreferrer">
         View posting
       </a>

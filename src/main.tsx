@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import { ApplicationsProvider } from "./state/ApplicationContext";
 
+console.log("2 main.tsx");
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Root element #root not found in index.html");
 
